@@ -11,7 +11,7 @@ async def get_db():
     async with async_session() as session:
         yield session
 
-@router.post("/")
+@router.post("/add")
 async def create_org(org: OrganizationCreate, db: AsyncSession = Depends(get_db)):
     new_org = Organization(**org.dict())
     db.add(new_org)
@@ -19,7 +19,8 @@ async def create_org(org: OrganizationCreate, db: AsyncSession = Depends(get_db)
     await db.refresh(new_org)
     return new_org
 
-@router.get("/")
+@router.get("/list")
 async def list_orgs(db: AsyncSession = Depends(get_db)):
     result = await db.execute(select(Organization))
     return result.scalars().all()
+

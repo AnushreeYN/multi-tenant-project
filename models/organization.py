@@ -11,3 +11,4 @@ class Organization(Base):
     description: Mapped[str | None] = mapped_column(String, nullable=True)
 
     users: Mapped[list["User"]] = relationship(back_populates="organization")
+
